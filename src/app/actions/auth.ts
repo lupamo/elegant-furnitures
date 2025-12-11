@@ -7,13 +7,19 @@ import { AuthError } from "next-auth"
 import { z } from "zod"
 
 const RegisterSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().min(1, "Email is required").refine(
+    (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+    { message: "Invalid email address" }
+  ),
   password: z.string().min(6, "Password must be at least 6 characters"),
   name: z.string().min(2, "Name must be at least 2 characters"),
 })
 
 const LoginSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().min(1, "Email is required").refine(
+    (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+    { message: "Invalid email address" }
+  ),
   password: z.string().min(1, "Password is required"),
 })
 
@@ -52,7 +58,7 @@ export async function register(formData: FormData) {
         email,
         password: hashedPassword,
         name,
-        role: "USER", // Default role
+        role: "USER", 
       }
     })
 
