@@ -91,20 +91,25 @@ export async function login(formData: FormData) {
     })
 
     return { success: true }
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          return { error: "Invalid email or password" }
-        default:
-          return { error: "Something went wrong" }
-      }
+        return { error: "Invalid email or password" }
     }
-    throw error
+    
+    if (error?.message) {
+      return { error: error.message }
+    }
+    
+    return { error: "Something went wrong" }
   }
 }
 
 // Logout user
 export async function logout() {
   await signOut({ redirectTo: "/login" })
+}
+
+//Google Sign-In
+export async function signInWithGoogle() {
+  await signIn("google", { redirectTo: "/" })
 }

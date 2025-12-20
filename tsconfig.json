@@ -23,15 +23,18 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": [ "./*" ], 
+      "./*": ["./src/app/*"], 
+      "@/app/*": ["./src/app/*"],
+      "@/lib/*": ["./lib/*"], 
+      "@/components/*": ["./src/app/components/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.d.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
